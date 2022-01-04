@@ -10,3 +10,6 @@ Forwards sms if it matches the specified pattern.
 - type the regex for the entire body. Will do a Patter.match not find
 - put the recipient number
 - hit add. that's it
+
+## Download APK:
+https://github.com/samarth261/SMSForwarder/releases/latest
