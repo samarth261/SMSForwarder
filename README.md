@@ -4,13 +4,13 @@
 Forwards sms if it matches the specified pattern.
 
 ## Use case
-- If you want to forward specific OTPs. for credit cards etc.
+- If you want to forward specific OTPs. For example if you have a common account with 2 FA using sms.
 
 ## How to
-- type the regex for the entire body. Will do a Patter.match not find
-- put the recipient number
-- hit add. that's it
+- Type in the regex used to filter out the sms. The regex needs to match the entire body of the message.
+- Put in the recipient number.
+- hit "Add Rule". That's it.
 
 ## Download APK:
-[Latest Release](https://github.com/samarth261/SMSForwarder/releases/latest)
-[Latest APK](https://github.com/samarth261/SMSForwarder/releases/latest/download/SMSForward.apk)
+- [Latest Release](https://github.com/samarth261/SMSForwarder/releases/latest)
+- [Latest APK direct download](https://github.com/samarth261/SMSForwarder/releases/latest/download/SMSForward.apk)
