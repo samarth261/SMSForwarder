@@ -12,4 +12,5 @@ Forwards sms if it matches the specified pattern.
 - hit add. that's it
 
 ## Download APK:
-https://github.com/samarth261/SMSForwarder/releases/latest
+[Latest Release](https://github.com/samarth261/SMSForwarder/releases/latest)
+[Latest APK](https://github.com/samarth261/SMSForwarder/releases/latest/download/SMSForward.apk)
