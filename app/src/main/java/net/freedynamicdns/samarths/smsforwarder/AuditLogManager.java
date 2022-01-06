@@ -33,7 +33,10 @@ public class AuditLogManager {
 
     public enum AuditTag{
         SMS_RECEIVED_TAG,
-        APP_LIFE_CYCLE
+        APP_LIFE_CYCLE,
+        RULES_CHANGED,
+        SMS_FORWARD,
+        SMS_MATCHED
     }
 
     private AuditLogManager(){}

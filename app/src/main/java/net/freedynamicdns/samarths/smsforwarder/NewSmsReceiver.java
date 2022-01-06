@@ -21,6 +21,7 @@ public class NewSmsReceiver extends BroadcastReceiver {
         if (!intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             return;
         }
+        AuditLogManager.AddNewAuditLog(context, "Received sms", AuditLogManager.AuditTag.SMS_RECEIVED_TAG);
 
         // The intent is a new SMS received.
         Bundle bundle = intent.getExtras();
@@ -46,7 +47,8 @@ public class NewSmsReceiver extends BroadcastReceiver {
                 HashSet<RulesManager.Rule> all = RulesManager.getAll(context);
                 for (RulesManager.Rule rule : all) {
                     if (Pattern.matches(rule.pattern, msgBody)) {
-                        SendSms.sendSMS(rule.phone, msgBody);
+                        AuditLogManager.AddNewAuditLog(context, "SMS matches pattern:\n" + rule.pattern, AuditLogManager.AuditTag.SMS_MATCHED);
+                        SendSms.sendSMS(rule.phone, msgBody, context);
                     }
                 }
             }

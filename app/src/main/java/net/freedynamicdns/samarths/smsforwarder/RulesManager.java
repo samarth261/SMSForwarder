@@ -26,10 +26,11 @@ public class RulesManager {
         }
         String uuid = UUID.randomUUID().toString();
         keys.add(uuid);
-        e.putString(uuid+PATTERN, pattern);
-        e.putString(uuid+PHONE, phone);
+        e.putString(uuid + PATTERN, pattern);
+        e.putString(uuid + PHONE, phone);
         e.putStringSet(ALL_KEYS, keys);
         e.commit();
+        AuditLogManager.AddNewAuditLog(context, "new Rule added.\n---------\n" + pattern + "\n---------\n" + phone, AuditLogManager.AuditTag.RULES_CHANGED);
     }
 
     public static void deleteRule(String uuid, Context context) {
@@ -40,18 +41,21 @@ public class RulesManager {
             return;
         }
 
-        e.remove(uuid+PATTERN).remove(uuid+PHONE);
+        String pat = sp.getString(uuid + PATTERN, "");
+        String ph = sp.getString(uuid + PHONE, "");
+        e.remove(uuid + PATTERN).remove(uuid + PHONE);
         keys.remove(uuid);
         e.putStringSet(ALL_KEYS, keys);
         e.commit();
+        AuditLogManager.AddNewAuditLog(context, "Delete rule:\n------\n" + pat + "\n------\n" + ph, AuditLogManager.AuditTag.RULES_CHANGED);
     }
 
     public static HashSet<Rule> getAll(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         HashSet<Rule> ret = new HashSet<>();
-        for(String uuid : sp.getStringSet(ALL_KEYS, new HashSet<>())){
+        for (String uuid : sp.getStringSet(ALL_KEYS, new HashSet<>())) {
             Log.d("mylog", uuid);
-            ret.add(new Rule(sp.getString(uuid+PATTERN,""),sp.getString(uuid+PHONE, ""), uuid));
+            ret.add(new Rule(sp.getString(uuid + PATTERN, ""), sp.getString(uuid + PHONE, ""), uuid));
         }
         return ret;
     }
