@@ -3,6 +3,7 @@ package net.freedynamicdns.samarths.smsforwarder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -52,13 +53,14 @@ public class AuditLogActivity extends AppCompatActivity {
             View v = inflater.inflate(R.layout.auditlogitem, null);
             ((TextView)v.findViewById(R.id.auditmessage)).setText(log.logMessage);
             ((TextView)v.findViewById(R.id.auditdate)).setText(df.format(new Date(log.time)));
-            View b = ((Button) findViewById(R.id.auditlogitemdeletebtn));
-            b.setOnClickListener(new View.OnClickListener() {
+            v.findViewById(R.id.auditlogitemdeletebtn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    ll.removeView(v);
+                    AuditLogManager.DeleteAuditLog(getApplicationContext(), log.uuid);
                 }
             });
+
             ll.addView(v);
         }
     }
