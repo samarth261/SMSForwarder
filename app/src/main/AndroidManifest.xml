@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SMSForwarder">
         <activity
+            android:name=".AuditLogActivity"
+            android:exported="false" />
+        <activity
             android:name=".RulesActivity"
             android:exported="false" />
 
