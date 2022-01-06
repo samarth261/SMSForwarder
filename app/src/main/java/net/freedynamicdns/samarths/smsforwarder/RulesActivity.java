@@ -2,10 +2,13 @@ package net.freedynamicdns.samarths.smsforwarder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,8 @@ public class RulesActivity extends AppCompatActivity {
                 String ph = ((TextInputEditText) findViewById(R.id.newnumber)).getText().toString();
                 Toast.makeText(getApplicationContext(), pat + " " + ph, Toast.LENGTH_SHORT).show();
                 RulesManager.addRule(pat, ph, getApplicationContext());
+                ((EditText)findViewById(R.id.newpattern)).setText("");
+                ((EditText)findViewById(R.id.newnumber)).setText("");
                 ScrapAndPopulateView(ll);
             }
         });
@@ -46,6 +51,15 @@ public class RulesActivity extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.ruleitem,null);
             ((TextView)v.findViewById(R.id.pattern)).setText(rule.pattern);
+            v.findViewById(R.id.pattern).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("pattern", rule.pattern);
+                    clipboardManager.setPrimaryClip(clip);
+                    Toast.makeText(context, "Copied pattern to clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
             ((TextView)v.findViewById(R.id.phone)).setText(rule.phone);
             v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
                 @Override
