@@ -3,6 +3,7 @@ package net.freedynamicdns.samarths.smsforwarder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.telephony.SmsManager;
@@ -26,39 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.linearlayout);
-
-        ScrapAndPopulateView(ll);
-
-        findViewById(R.id.addbtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.vieweditrules).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pat = ((TextInputEditText)findViewById(R.id.newpattern)).getText().toString();
-                String ph = ((TextInputEditText) findViewById(R.id.newnumber)).getText().toString();
-                Toast.makeText(getApplicationContext(), pat + " " + ph, Toast.LENGTH_SHORT).show();
-                RulesManager.addRule(pat, ph, getApplicationContext());
-                ScrapAndPopulateView(ll);
+                startActivity(new Intent(getApplicationContext(), RulesActivity.class));
             }
         });
     }
 
-    private void ScrapAndPopulateView(LinearLayout ll) {
-        ll.removeAllViews();
-        Context context = getApplicationContext();
-        HashSet<RulesManager.Rule> all = RulesManager.getAll(context);
-        for(RulesManager.Rule rule : all){
-            LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.ruleitem,null);
-            ((TextView)v.findViewById(R.id.pattern)).setText(rule.pattern);
-            ((TextView)v.findViewById(R.id.phone)).setText(rule.phone);
-            v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    RulesManager.deleteRule(rule.uuid, context);
-                    ScrapAndPopulateView(ll);
-                }
-            });
-            ll.addView(v);
-        }
-    }
 }
