@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AuditLogManager.AddNewAuditLog(getApplicationContext(),"App opened", AuditLogManager.AuditTag.APP_LIFE_CYCLE);
+
         findViewById(R.id.vieweditrules).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
