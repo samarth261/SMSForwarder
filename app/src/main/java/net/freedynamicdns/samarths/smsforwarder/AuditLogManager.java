@@ -36,7 +36,8 @@ public class AuditLogManager {
         APP_LIFE_CYCLE,
         RULES_CHANGED,
         SMS_FORWARD,
-        SMS_MATCHED
+        SMS_MATCHED,
+        BOOT
     }
 
     private AuditLogManager(){}
