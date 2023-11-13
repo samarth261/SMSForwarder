@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+**/*gcpappcreds.json
+/app/src/main/res/raw/gcpappcreds.json
+
