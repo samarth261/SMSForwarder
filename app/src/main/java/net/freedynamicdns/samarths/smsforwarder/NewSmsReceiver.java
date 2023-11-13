@@ -23,6 +23,11 @@ public class NewSmsReceiver extends BroadcastReceiver {
         }
         AuditLogManager.AddNewAuditLog(context, "Received sms", AuditLogManager.AuditTag.SMS_RECEIVED_TAG);
 
+        if(!RulesManager.isSmsForwardingEnabled(context)) {
+            AuditLogManager.AddNewAuditLog(context, "Skip forwarding", AuditLogManager.AuditTag.SMS_FORWARD);
+            return;
+        }
+
         // The intent is a new SMS received.
         Bundle bundle = intent.getExtras();
         for (String s : bundle.keySet()) {

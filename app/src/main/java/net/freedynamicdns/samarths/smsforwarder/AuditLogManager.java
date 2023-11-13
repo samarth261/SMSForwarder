@@ -37,7 +37,8 @@ public class AuditLogManager {
         RULES_CHANGED,
         SMS_FORWARD,
         SMS_MATCHED,
-        BOOT
+        BOOT,
+        SMS_FORWARDING_SETTING
     }
 
     private AuditLogManager(){}

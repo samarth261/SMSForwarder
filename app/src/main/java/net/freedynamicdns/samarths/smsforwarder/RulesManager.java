@@ -8,7 +8,6 @@ import android.util.Log;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 
 public class RulesManager {
@@ -16,6 +15,10 @@ public class RulesManager {
     public static final String ALL_KEYS = "all_keys";
     public static final String PATTERN = "pattern";
     public static final String PHONE = "phone";
+    public static class Constants {
+        public static final String SETTINGS_SHARED_PREFERENCES_NAME = "settings_sp";
+        public static final String SMS_FORWARDING_ON = "sms_forwarding";
+    }
 
     public static void addRule(String pattern, String phone, Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -69,6 +72,21 @@ public class RulesManager {
             pattern = pat;
             phone = ph;
             uuid = id;
+        }
+    }
+
+    public static boolean isSmsForwardingEnabled(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Constants.SETTINGS_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getBoolean(Constants.SMS_FORWARDING_ON, false);
+    }
+
+    public static void setSmsForwardingEnabled(Context context, boolean target_value) {
+        SharedPreferences sp = context.getSharedPreferences(Constants.SETTINGS_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(Constants.SMS_FORWARDING_ON, target_value).commit();
+        if (target_value) {
+            AuditLogManager.AddNewAuditLog(context, "Enable SMS forwarding", AuditLogManager.AuditTag.SMS_FORWARDING_SETTING);
+        } else {
+            AuditLogManager.AddNewAuditLog(context, "Disable SMS forwarding", AuditLogManager.AuditTag.SMS_FORWARDING_SETTING);
         }
     }
 }
